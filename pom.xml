@@ -160,7 +160,9 @@
 				<version>3.3.0</version> <!-- Mettez à jour vers une version plus récente si nécessaire -->
 				<configuration>
 					<encoding>UTF-8</encoding>
+					<escapeString>\</escapeString>
 				</configuration>
+
 			</plugin>
 		</plugins>
 	</build>
