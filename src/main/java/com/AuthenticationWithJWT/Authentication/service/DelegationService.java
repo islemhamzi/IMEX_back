@@ -30,17 +30,24 @@ public class DelegationService {
                 .orElseThrow(() -> new IllegalArgumentException("Delegator not found: " + delegatorUsername));
         User delegate = userRepository.findByMatricule(delegateUsername)
                 .orElseThrow(() -> new IllegalArgumentException("Delegate not found: " + delegateUsername));
+
         if (startDate.isAfter(endDate)) {
             throw new IllegalArgumentException("Start date must be before end date");
         }
+
+        // Check if the document exists
+        Document document = documentRepository.findById(documentId)
+                .orElseThrow(() -> new IllegalArgumentException("Document not found: " + documentId));
+
         Delegation delegation = new Delegation();
         delegation.setDelegator(delegator);
         delegation.setDelegate(delegate);
         delegation.setStartDate(startDate);
         delegation.setEndDate(endDate);
-        delegation.setDocumentId(documentId); // Assurez-vous de bien définir le documentId
+        delegation.setDocumentId(documentId); // Setting the documentId directly
         delegationRepository.save(delegation);
     }
+
 
 
     public List<DocumentDto> getAllDocumentsDelegatedToMe(String username) {

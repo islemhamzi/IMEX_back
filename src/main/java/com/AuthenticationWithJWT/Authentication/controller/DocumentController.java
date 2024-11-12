@@ -61,7 +61,10 @@ public class DocumentController {
             return ResponseEntity.notFound().build();
         }
 
-        Path path = Paths.get("src/main/documents/" + document.getCheminDocument());
+        // Fix the file path construction based on 'documents' directory (outside of src/main/resources)
+        // Assuming the 'documents' folder is directly under your project root directory
+        Path path = Paths.get( document.getCheminDocument()); // No need for 'src/main'
+
         Resource resource;
         try {
             resource = new UrlResource(path.toUri());
@@ -86,6 +89,7 @@ public class DocumentController {
                 .body(resource);
     }
 
+
     @PostMapping("/send/{id}")
     public ResponseEntity<Map<String, String>> sendDocumentByEmail(
             @PathVariable Long id,
@@ -97,7 +101,10 @@ public class DocumentController {
             return ResponseEntity.notFound().build();
         }
 
-        String attachmentPath = "src/main/documents/" + document.getCheminDocument();
+        // Fixing the file path construction
+        String documentsFolder = "documents"; // Assuming 'documents' is at the root of your project
+        String attachmentPath = Paths.get(document.getCheminDocument()).toString();
+
         emailService.sendEmailWithAttachment(email, "Document: " + document.getNomDocument(),
                 "Please find the document attached.", attachmentPath);
 
@@ -120,7 +127,9 @@ public class DocumentController {
             return ResponseEntity.notFound().build();
         }
 
-        Path path = Paths.get("src/main/documents/" + document.getCheminDocument());
+        // Fixing the file path construction
+        Path path = Paths.get( document.getCheminDocument());
+
         Resource resource;
         try {
             resource = new UrlResource(path.toUri());

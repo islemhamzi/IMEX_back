@@ -52,5 +52,7 @@ public class Document {
     private boolean consulted; // Add this line
 
     @Column(nullable = false)
-    private boolean emailed; // Add this line
+    private boolean emailed;
+
+    // Add this line
 }

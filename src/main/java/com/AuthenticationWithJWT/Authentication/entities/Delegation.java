@@ -34,5 +34,4 @@ public class Delegation {
     @Column(nullable = false)
     private Long documentId;
 
-
 }

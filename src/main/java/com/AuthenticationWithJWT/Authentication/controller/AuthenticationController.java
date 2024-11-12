@@ -94,11 +94,15 @@ public class AuthenticationController {
         if (refreshToken != null) {
             refreshTokenService.deleteByToken(refreshToken);
         }
+
         ResponseCookie jwtCookie = jwtService.getCleanJwtCookie();
         ResponseCookie refreshTokenCookie = refreshTokenService.getCleanRefreshTokenCookie();
+
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
+                .headers(headers -> {
+                    headers.add(HttpHeaders.SET_COOKIE, jwtCookie.toString());
+                    headers.add(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString());
+                })
                 .build();
     }
 
