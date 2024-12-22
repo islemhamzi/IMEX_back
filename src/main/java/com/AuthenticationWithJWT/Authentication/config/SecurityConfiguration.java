@@ -1,5 +1,6 @@
 package com.AuthenticationWithJWT.Authentication.config;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -72,7 +73,7 @@ public class SecurityConfiguration {
                 .accessDeniedHandler(customAccessDeniedHandler)
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/v1/auth/**" , "api/chat/message" , "openai/ask" , "api/chatbot/ask" , "api/chatbot", "chat/send").permitAll()
                         .requestMatchers("/api/v1/activity-logs/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/users/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/users/verify-token").hasAnyRole("ADMIN", "USER", "CHEF_AGENCE", "TFJO")
@@ -86,6 +87,7 @@ public class SecurityConfiguration {
 
         return http.build();
     }
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
