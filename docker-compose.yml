@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: Imex_finale
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+  app:
+    image: spring-boot-app:latest
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/Imex_finale
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
