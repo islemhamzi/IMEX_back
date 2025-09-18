@@ -1,3 +1,5 @@
+version: '3.9'
+
 services:
   db:
     image: postgres:15
@@ -7,9 +9,23 @@ services:
       POSTGRES_PASSWORD: root
     ports:
       - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
   app:
-    image: spring-boot-app:latest
+    image: islemhamzii/imex-back:latest
+    depends_on:
+      - db
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/Imex_finale
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: true
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+    ports:
+      - "8080:8080"
+    restart: always
+
+volumes:
+  db-data:
