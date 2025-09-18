@@ -45,10 +45,9 @@ jobs:
           push: true
           tags: islemhamzii/imex-back:latest
 
-      # 7. Pull latest backend image
-      - name: Pull latest backend image
-        run: docker-compose pull app
-
-      # 8. Restart only backend container
-      - name: Restart backend container
-        run: docker-compose up -d app
+      # 7. Deploy with Docker Compose
+      - name: Deploy with Docker Compose
+        uses: docker/compose-action@v2
+        with:
+          # Pull latest images and start services
+          run: up -d
